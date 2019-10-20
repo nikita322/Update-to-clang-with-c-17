@@ -421,20 +421,34 @@ for_each(i.begin(), i.end(), std::bind(&CHARACTER::UpdateStateMachine, std::plac
 ```
 
 - Go to `game/config.cpp` replace this (three times):
-        if (NULL != line[0])
-    to this:
-        if ('\0' != line[0])
+```cpp
+if (NULL != line[0])
+```  
+to this:  
+```cpp
+if ('\0' != line[0])
+```
 
-- Go to `game/char_skill.cpp` replace this:
-        if (false == 
-        m_SkillUseInfo[dwVnum].UseSkill(
-            bUseGrandMaster,
-            (NULL != pkVictim && SKILL_HORSE_WILDATTACK != dwVnum) ? pkVictim->GetVID() : NULL,
-            ComputeCooltime(iCooltime * 1000),
-            iSplashCount,
-            lMaxHit))
-    to this:
-        if (!m_SkillUseInfo[dwVnum].UseSkill(bUseGrandMaster, (NULL != pkVictim and SKILL_HORSE_WILDATTACK != dwVnum) ? pkVictim->GetVID() : 0, ComputeCooltime(iCooltime * 1000), iSplashCount, lMaxHit))
+- Go to `game/char_skill.cpp` replace this:  
+```cpp
+if (false == 
+m_SkillUseInfo[dwVnum].UseSkill(
+    bUseGrandMaster,
+    (NULL != pkVictim && SKILL_HORSE_WILDATTACK != dwVnum) ? pkVictim->GetVID() : NULL,
+    ComputeCooltime(iCooltime * 1000),
+    iSplashCount,
+    lMaxHit))
+```  
+to this:  
+```cpp
+if (false == 
+m_SkillUseInfo[dwVnum].UseSkill(
+    bUseGrandMaster,
+    (NULL != pkVictim && SKILL_HORSE_WILDATTACK != dwVnum) ? pkVictim->GetVID() : NULL,
+    ComputeCooltime(iCooltime * 1000),
+    iSplashCount,
+    lMaxHit))
+```
 
 - Go to `game/cmd_gm.cpp` replace this:
         if (*szName == NULL || *szChangeAmount == '\0')
