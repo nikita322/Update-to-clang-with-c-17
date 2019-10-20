@@ -1,12 +1,12 @@
 Update to clang with c++17
 =============================
-1. Replace "g++" or "g++48"/"g++49" to "c++"
+- Replace "g++" or "g++48"/"g++49" to "c++"
 
-2. Raplace "-mtune=i686" or "-mcpu=i686" to "-m32"
+- Raplace "-mtune=i686" or "-mcpu=i686" to "-m32"
 
-3. Add new flag for all Makefile "-std=c++17"
+- Add new flag for all Makefile "-std=c++17"
 
-4. Go to game/cipher.h replace this: 
+- Go to game/cipher.h replace this: 
 ```cpp
 encoder_->ProcessData((byte*)buffer, (const byte*)buffer, length);
 ```  
@@ -23,7 +23,7 @@ on this:
 decoder_->ProcessData((CryptoPP::byte*)buffer, (const CryptoPP::byte*)buffer, length);
 ```
 
-5. Go to common/stl.h remove that:  
+- Go to common/stl.h remove that:  
 ```cpp
 template <typename T> T MIN(T a, T b)
 {
@@ -42,24 +42,24 @@ template <typename T> T MINMAX(T min, T value, T max)
     return (max < tv) ? max : tv;
 }
 ```  
-    And this:  
-        ```
-        #ifdef __GNUC__
-        #include <ext/functional>
-        #endif
-        ```  
-    Repalce this:  
-        ```
-        #ifndef itertype
-        #define itertype(v) typeof((v).begin())
-        #endif
-        ```  
-    To this:  
-        ```
-        #ifndef itertype
-        #define itertype(v) __typeof((v).begin())
-        #endif
-        ```
+And this:  
+```cpp
+#ifdef __GNUC__
+#include <ext/functional>
+#endif
+```  
+Repalce this:  
+```cpp
+#ifndef itertype
+#define itertype(v) typeof((v).begin())
+#endif
+```  
+To this:  
+```cpp
+#ifndef itertype
+#define itertype(v) __typeof((v).begin())
+#endif
+```
 
 - Go to game/DragonSoul.cpp replace this:
         float fCharge = vec_chargings[idx] * (100 + iBonus) / 100.f;
