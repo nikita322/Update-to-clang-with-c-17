@@ -1,12 +1,12 @@
 Update to clang with c++17
 =============================
-- Replace "g++" or "g++48"/"g++49" to "c++"
+1. Replace "g++" or "g++48"/"g++49" to "c++"
 
-- Raplace "-mtune=i686" or "-mcpu=i686" to "-m32"
+2. Raplace "-mtune=i686" or "-mcpu=i686" to "-m32"
 
-- Add new flag for all Makefile "-std=c++17"
+3. Add new flag for all Makefile "-std=c++17"
 
-- Go to game/cipher.h replace this:
+4. Go to game/cipher.h replace this:
     `encoder_->ProcessData((byte*)buffer, (const byte*)buffer, length);`
 on this:
     `encoder_->ProcessData((CryptoPP::byte*)buffer, (const CryptoPP::byte*)buffer, length);`
