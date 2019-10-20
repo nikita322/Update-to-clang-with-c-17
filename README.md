@@ -1,6 +1,6 @@
 Update to clang with c++17
 =============================
-- Replace "g++" or "g++48"/"g++49" to "c++"
+- Replace `g++` or `g++48/g++49` to `c++`
 
 - Raplace "-mtune=i686" or "-mcpu=i686" to "-m32"
 
