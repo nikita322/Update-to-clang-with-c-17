@@ -1,23 +1,19 @@
 Update to clang with c++17
 =============================
-- 1
-> Replace "g++" or "g++48"/"g++49" to "c++"
+- Replace "g++" or "g++48"/"g++49" to "c++"
 
-- 2
-> Raplace "-mtune=i686" or "-mcpu=i686" to "-m32"
+- Raplace "-mtune=i686" or "-mcpu=i686" to "-m32"
 
-- 3
-> Add new flag for all Makefile "-std=c++17"
+- Add new flag for all Makefile "-std=c++17"
 
-- 4
-> Go to game/cipher.h replace this:
-    encoder_->ProcessData((byte*)buffer, (const byte*)buffer, length);
-> on this:
-    encoder_->ProcessData((CryptoPP::byte*)buffer, (const CryptoPP::byte*)buffer, length);
-> and:
-    decoder_->ProcessData((byte*)buffer, (const byte*)buffer, length);
-> on this:
-    decoder_->ProcessData((CryptoPP::byte*)buffer, (const CryptoPP::byte*)buffer, length);
+- Go to game/cipher.h replace this:
+    `encoder_->ProcessData((byte*)buffer, (const byte*)buffer, length);`
+on this:
+    `encoder_->ProcessData((CryptoPP::byte*)buffer, (const CryptoPP::byte*)buffer, length);`
+and:
+    `decoder_->ProcessData((byte*)buffer, (const byte*)buffer, length);`
+on this:
+    `decoder_->ProcessData((CryptoPP::byte*)buffer, (const CryptoPP::byte*)buffer, length);`
 
 - Go to common/stl.h remove that:
         template <typename T> T MIN(T a, T b)
