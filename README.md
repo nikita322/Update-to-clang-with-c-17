@@ -121,29 +121,45 @@ std::mt19937 g(rd());
 std::shuffle(vec_bSlots.begin(), vec_bSlots.end(), g);
 ```
 
-- Go to `game/char.h` repalce this:
-        boost::unordered_map<VID, size_t> TargetVIDMap;
-    to this:
-        boost::unordered_map<DWORD, size_t> TargetVIDMap;
-    Go to game/char_skill.cpp repale this:
-        boost::unordered_map<VID, size_t>::iterator iterTargetMap = rSkillUseInfo.TargetVIDMap.find(TargetVID);
-    to this:
-        auto iterTargetMap = rSkillUseInfo.TargetVIDMap.find(TargetVID);
-    Go to game/sectree.h replace this:
-        LPSECTREE_LIST::iterator it_tree = m_neighbor_list.begin();
-    to this:
-        auto it_tree = m_neighbor_list.begin();
+- Go to `game/char.h` repalce this:  
+```cpp
+boost::unordered_map<VID, size_t> TargetVIDMap;
+```  
+to this:  
+```cpp
+boost::unordered_map<DWORD, size_t> TargetVIDMap;
+```  
+Go to `game/char_skill.cpp` repale this:  
+```cpp
+boost::unordered_map<VID, size_t>::iterator iterTargetMap = rSkillUseInfo.TargetVIDMap.find(TargetVID);
+```  
+to this:  
+```cpp
+auto iterTargetMap = rSkillUseInfo.TargetVIDMap.find(TargetVID);
+```  
+Go to `game/sectree.h` replace this:  
+```cpp
+LPSECTREE_LIST::iterator it_tree = m_neighbor_list.begin();
+```  
+to this:  
+```cpp
+auto it_tree = m_neighbor_list.begin();
+```
 
 - Replace all `typeof` and `auto_ptr` to `__typeof` and `unique_ptr` in game and db
 
-- Go to `db/Main.cpp` and remove this:
-        #ifdef __FreeBSD__
-        extern const char * _malloc_options;
-        #endif
-    and this:
-        #ifdef __FreeBSD__
-            _malloc_options = "A";
-        #endif
+- Go to `db/Main.cpp` and remove this:  
+```cpp
+#ifdef __FreeBSD__
+extern const char * _malloc_options;
+#endif
+```  
+and this:  
+```cpp
+#ifdef __FreeBSD__
+    _malloc_options = "A";
+#endif
+```
 
 - Go to `db/ClientManager.h` and `game/p2p.h` and replace this:
         #include <boost/unordered_map.hpp>
