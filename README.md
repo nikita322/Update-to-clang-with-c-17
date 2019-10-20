@@ -336,57 +336,89 @@ to this:
 for_each(m_memberOnline.begin(), m_memberOnline.end(), std::bind(&CGuild::SendGuildInfoPacket, this, std::placeholders::_1));
 ```
 
-- Go to `game/char_manager.cpp` replace this:
-        #ifndef __GNUC__
-        #include <boost/bind.hpp>
-        #endif
-    to this:
-        #include <boost/bind.hpp>
-    then remove this:
-        #ifdef __GNUC__
-            using namespace __gnu_cxx;
-        #endif
-    then replace this:
-        #ifdef __GNUC__
-                    transform(m_map_pkPCChr.begin(), m_map_pkPCChr.end(), back_inserter(v), select2nd<NAME_MAP::value_type>());
-        #else
-                    transform(m_map_pkPCChr.begin(), m_map_pkPCChr.end(), back_inserter(v), boost::bind(&NAME_MAP::value_type::second, _1));
-        #endif
-    to this:
-        transform(m_map_pkPCChr.begin(), m_map_pkPCChr.end(), back_inserter(v), boost::bind(&NAME_MAP::value_type::second, _1));
-    then replace this:
-        #ifdef __GNUC__
-                    transform(m_set_pkChrState.begin(), m_set_pkChrState.end(), back_inserter(v), identity<CHARACTER_SET::value_type>());
-        #else
-                    v.insert(v.end(), m_set_pkChrState.begin(), m_set_pkChrState.end());
-        #endif
-    to this:
-        v.insert(v.end(), m_set_pkChrState.begin(), m_set_pkChrState.end());
-    then remove this:
-        #ifdef __GNUC__
-            using namespace __gnu_cxx;
-        #endif
-    then replace this:
-        #ifdef __GNUC__
-            transform(r.begin(), r.end(), back_inserter(*this), identity<CHARACTER_SET::value_type>());
-        #else
-            insert(end(), r.begin(), r.end());
-        #endif
-    to this:
-        insert(end(), r.begin(), r.end());
-    then replace this:
-        for_each(v.begin(), v.end(), bind2nd(mem_fun(&CHARACTER::UpdateCharacter), iPulse));
-    to this:
-        for_each(v.begin(), v.end(), std::bind(&CHARACTER::UpdateCharacter, std::placeholders::_1, iPulse));
-    then replace this:
-        for_each(v.begin(), v.end(), bind2nd(mem_fun(&CHARACTER::UpdateStateMachine), iPulse));
-    to this:
-        for_each(v.begin(), v.end(), std::bind(&CHARACTER::UpdateStateMachine, std::placeholders::_1, iPulse));
-    then replace this:
-        for_each(i.begin(), i.end(),
-                bind2nd(mem_fun(&CHARACTER::UpdateStateMachine), iPulse));
-    to this:
-        for_each(i.begin(), i.end(), std::bind(&CHARACTER::UpdateStateMachine, std::placeholders::_1, iPulse));
+- Go to `game/char_manager.cpp` replace this:  
+```cpp
+#ifndef __GNUC__
+#include <boost/bind.hpp>
+#endif
+```  
+to this:  
+```cpp
+#include <boost/bind.hpp>
+```  
+then remove this:  
+```cpp
+#ifdef __GNUC__
+using namespace __gnu_cxx;
+#endif
+```  
+then replace this:  
+```cpp
+#ifdef __GNUC__
+transform(m_map_pkPCChr.begin(), m_map_pkPCChr.end(), back_inserter(v), select2nd<NAME_MAP::value_type>());
+#else
+transform(m_map_pkPCChr.begin(), m_map_pkPCChr.end(), back_inserter(v), boost::bind(&NAME_MAP::value_type::second, _1));
+#endif
+```  
+to this:  
+```cpp
+transform(m_map_pkPCChr.begin(), m_map_pkPCChr.end(), back_inserter(v), boost::bind(&NAME_MAP::value_type::second, _1));
+```  
+then replace this:  
+```cpp
+#ifdef __GNUC__
+transform(m_set_pkChrState.begin(), m_set_pkChrState.end(), back_inserter(v), identity<CHARACTER_SET::value_type>());
+#else
+v.insert(v.end(), m_set_pkChrState.begin(), m_set_pkChrState.end());
+#endif
+```  
+to this:  
+```cpp
+v.insert(v.end(), m_set_pkChrState.begin(), m_set_pkChrState.end());
+```  
+then remove this:  
+```cpp
+#ifdef __GNUC__
+using namespace __gnu_cxx;
+#endif
+```  
+then replace this:  
+```cpp
+#ifdef __GNUC__
+transform(r.begin(), r.end(), back_inserter(*this), identity<CHARACTER_SET::value_type>());
+#else
+insert(end(), r.begin(), r.end());
+#endif
+```  
+to this:  
+```cpp
+insert(end(), r.begin(), r.end());
+```  
+then replace this:  
+```cpp
+for_each(v.begin(), v.end(), bind2nd(mem_fun(&CHARACTER::UpdateCharacter), iPulse));
+```  
+to this:  
+```cpp
+for_each(v.begin(), v.end(), std::bind(&CHARACTER::UpdateCharacter, std::placeholders::_1, iPulse));
+```  
+then replace this:  
+```cpp
+for_each(v.begin(), v.end(), bind2nd(mem_fun(&CHARACTER::UpdateStateMachine), iPulse));
+```  
+to this:  
+```cpp
+for_each(v.begin(), v.end(), std::bind(&CHARACTER::UpdateStateMachine, std::placeholders::_1, iPulse));
+```  
+then replace this:  
+```cpp
+for_each(i.begin(), i.end(),
+bind2nd(mem_fun(&CHARACTER::UpdateStateMachine), iPulse));
+```  
+to this:  
+```cpp
+for_each(i.begin(), i.end(), std::bind(&CHARACTER::UpdateStateMachine, std::placeholders::_1, iPulse));
+```
 
 - Go to `game/config.cpp` replace this (three times):
         if (NULL != line[0])
