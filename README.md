@@ -2,11 +2,11 @@ Update to clang with c++17
 =============================
 - Replace `g++` or `g++48/g++49` to `c++`
 
-- Raplace "-mtune=i686" or "-mcpu=i686" to "-m32"
+- Raplace `-mtune=i686` or `-mcpu=i686` to `-m32`
 
-- Add new flag for all Makefile "-std=c++17"
+- Add new flag for all Makefile `-std=c++17`
 
-- Go to game/cipher.h replace this: 
+- Go to `game/cipher.h` replace this: 
 ```cpp
 encoder_->ProcessData((byte*)buffer, (const byte*)buffer, length);
 ```  
@@ -23,7 +23,7 @@ on this:
 decoder_->ProcessData((CryptoPP::byte*)buffer, (const CryptoPP::byte*)buffer, length);
 ```
 
-- Go to common/stl.h remove that:  
+- Go to `common/stl.h` remove that:  
 ```cpp
 template <typename T> T MIN(T a, T b)
 {
@@ -61,18 +61,22 @@ To this:
 #endif
 ```
 
-- Go to game/DragonSoul.cpp replace this:
-        float fCharge = vec_chargings[idx] * (100 + iBonus) / 100.f;
-        fCharge = std::MINMAX <float> (0.f, fCharge, 100.f);
-    on this:
-        float fCharge = vec_chargings[idx] * (100 + iBonus) / 100.f;
-        auto clip = [](float floor, float x, float ceiling)
-        {
-            return std::min(ceiling, std::max(floor, x));
-        };
-        fCharge = clip(0.f, fCharge, 100.f);
+- Go to `game/DragonSoul.cpp` replace this:  
+```cpp
+float fCharge = vec_chargings[idx] * (100 + iBonus) / 100.f;
+fCharge = std::MINMAX <float> (0.f, fCharge, 100.f);
+```  
+on this:  
+```cpp
+float fCharge = vec_chargings[idx] * (100 + iBonus) / 100.f;
+auto clip = [](float floor, float x, float ceiling)
+{
+    return std::min(ceiling, std::max(floor, x));
+};
+fCharge = clip(0.f, fCharge, 100.f);
+```
 
-- Go to libgame/src/grid.cc add this:
+- Go to `libgame/src/grid.cc` add this:
         #include <algorithm>
     after this:
         #include <stdio.h>
@@ -85,19 +89,19 @@ To this:
     to this:
         int iSize = std::min(w * h, pkGrid->m_iWidth * pkGrid->m_iHeight);
 
-- Go to game/stdafx.h add this:
+- Go to `game/stdafx.h` add this:
         #include <random>
     after this:
         #include <algorithm>
         #include <float.h>
-    Go to game/char_battle.cpp replace this (twice):
+    Go to `game/char_battle.cpp` replace this (twice):
         random_shuffle(vec_bSlots.begin(), vec_bSlots.end());
     to this:
         std::random_device rd;
         std::mt19937 g(rd());
         std::shuffle(vec_bSlots.begin(), vec_bSlots.end(), g);
 
-- Go to game/char.h repalce this:
+- Go to `game/char.h` repalce this:
         boost::unordered_map<VID, size_t> TargetVIDMap;
     to this:
         boost::unordered_map<DWORD, size_t> TargetVIDMap;
@@ -110,9 +114,9 @@ To this:
     to this:
         auto it_tree = m_neighbor_list.begin();
 
-- Replace all "typeof" and "auto_ptr" to "__typeof" and "unique_ptr" in game and db
+- Replace all `typeof` and `auto_ptr` to `__typeof` and `unique_ptr` in game and db
 
-- Go to db/Main.cpp and remove this:
+- Go to `db/Main.cpp` and remove this:
         #ifdef __FreeBSD__
         extern const char * _malloc_options;
         #endif
@@ -121,7 +125,7 @@ To this:
             _malloc_options = "A";
         #endif
 
-- Go to db/ClientManager.h and game/p2p.h and replace this:
+- Go to `db/ClientManager.h` and `game/p2p.h` and replace this:
         #include <boost/unordered_map.hpp>
         #include <boost/unordered_set.hpp>
     to this:
@@ -142,7 +146,7 @@ To this:
         #define isdigit iswdigit
         #define isspace iswspace
         #endif
-    Go to game/fifo_allocator.h and remove this:
+    Go to `game/fifo_allocator.h` and remove this:
         #ifdef __GNUC__
         #include <tr1/unordered_map>
         #define TR1_NS std::tr1
@@ -150,7 +154,7 @@ To this:
         #include <boost/unordered_map.hpp>
         #define TR1_NS boost
         #endif
-    Go to game/debug_allocator_adapter.h and remove this:
+    Go to `game/debug_allocator_adapter.h` and remove this:
         #ifdef __GNUC__
         #include <tr1/unordered_map>
         #define TR1_NS std::tr1
@@ -158,16 +162,16 @@ To this:
         #include <boost/unordered_map.hpp>
         #define TR1_NS boost
         #endif
-    Replace all "TR1_NS::" to "std::" in game and db
+    Replace all `TR1_NS::` to `std::` in game and db
 
-- Go to libthecore/src gost.c, tea.c, utils.c, xmd5.c and remove all "register", example:
+- Go to `libthecore/src` and remove all `register` from `gost.c, tea.c, utils.c, xmd5.c`, example:
         register DWORD n1, n2;
     should be like that:
         DWORD n1, n2;
-    Go to game/matrix_card.cpp and remove all "register" too.
+    Go to `game/matrix_card.cpp` and remove all `register` too.
 
-- Remove game/minilzo.h and game/minilzo.c
-    Go to game lzo_manager.h, main.cpp, MarkImage.h, test.cpp, test_window.cpp and replace this:
+- Remove `game/minilzo.h` and `game/minilzo.c`
+    Go to game `lzo_manager.h, main.cpp, MarkImage.h, test.cpp, test_window.cpp` and replace this:
         #include "minilzo.h"
     to this:
         #include <minilzo/minilzo.h>
@@ -180,12 +184,12 @@ To this:
         extern/include/minilzo/minilzo.h
         extern/lib/libminilzo.a
 
-- Go to game/input_db.cpp replace this:
+- Go to `game/input_db.cpp` replace this:
         CHARACTER_MANAGER::instance().for_each_pc(std::mem_fun(&CHARACTER::ComputePoints));
     to this:
         CHARACTER_MANAGER::instance().for_each_pc(std::mem_fn(&CHARACTER::ComputePoints));
     
-- Go to game/messenger_manager.cpp replace this:
+- Go to `game/messenger_manager.cpp` replace this:
         DBManager::instance().FuncQuery(std::bind1st(std::mem_fun(&MessengerManager::LoadList), this),
     to this:
         DBManager::instance().FuncQuery(std::bind(&MessengerManager::LoadList, this, std::placeholders::_1),
@@ -230,7 +234,7 @@ To this:
     to this:
         for_each(m_memberOnline.begin(), m_memberOnline.end(), std::bind(&CGuild::SendGuildInfoPacket, this, std::placeholders::_1));
 
-- Go to game/char_manager.cpp replace this:
+- Go to `game/char_manager.cpp` replace this:
         #ifndef __GNUC__
         #include <boost/bind.hpp>
         #endif
@@ -282,12 +286,12 @@ To this:
     to this:
         for_each(i.begin(), i.end(), std::bind(&CHARACTER::UpdateStateMachine, std::placeholders::_1, iPulse));
 
-- Go to game/config.cpp replace this (three times):
+- Go to `game/config.cpp` replace this (three times):
         if (NULL != line[0])
     to this:
         if ('\0' != line[0])
 
-- Go to game/char_skill.cpp replace this:
+- Go to `game/char_skill.cpp` replace this:
         if (false == 
         m_SkillUseInfo[dwVnum].UseSkill(
             bUseGrandMaster,
@@ -298,17 +302,17 @@ To this:
     to this:
         if (!m_SkillUseInfo[dwVnum].UseSkill(bUseGrandMaster, (NULL != pkVictim and SKILL_HORSE_WILDATTACK != dwVnum) ? pkVictim->GetVID() : 0, ComputeCooltime(iCooltime * 1000), iSplashCount, lMaxHit))
 
-- Go to game/cmd_gm.cpp replace this:
+- Go to `game/cmd_gm.cpp` replace this:
         if (*szName == NULL || *szChangeAmount == '\0')
     to this:
         if (*szName == '\0' or * szChangeAmount == '\0')
 
-- Go to game/char_item.cpp replace this (five times):
+- Go to `game/char_item.cpp` replace this (five times):
         std::vector <LPITEM> item_gets(NULL);
     to this:
         std::vector <LPITEM> item_gets(0);
 
-- Go to game/utils.cpp replace this:
+- Go to `game/utils.cpp` replace this:
         if (NULL == w[1])
     to this:
         if (!w[1])
@@ -321,12 +325,12 @@ To this:
     to this:
         if (!*w)
 
-- Go to game/questlua_pc.cpp replace this:
+- Go to `game/questlua_pc.cpp` replace this:
         std::vector <LPITEM> item_gets(NULL);
     to this:
         std::vector <LPITEM> item_gets(0);
 
-- Go to game/sectree_manager.cpp replace this:
+- Go to `game/sectree_manager.cpp` replace this:
         unsigned int uiSize;
         unsigned int uiDestSize;
     to this:
