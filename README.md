@@ -6,13 +6,13 @@ Update to clang with c++17
 
 3. Add new flag for all Makefile "-std=c++17"
 
-4. Go to game/cipher.h replace this:
+4. Go to game/cipher.h replace this:  
     `encoder_->ProcessData((byte*)buffer, (const byte*)buffer, length);`
-on this:
+on this:  
     `encoder_->ProcessData((CryptoPP::byte*)buffer, (const CryptoPP::byte*)buffer, length);`
-and:
+and:  
     `decoder_->ProcessData((byte*)buffer, (const byte*)buffer, length);`
-on this:
+on this:  
     `decoder_->ProcessData((CryptoPP::byte*)buffer, (const CryptoPP::byte*)buffer, length);`
 
 - Go to common/stl.h remove that:
