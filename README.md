@@ -212,25 +212,30 @@ Go to `game/debug_allocator_adapter.h` and remove this:
 ```  
 Replace all `TR1_NS::` to `std::` in game and db
 
-- Go to `libthecore/src` and remove all `register` from `gost.c, tea.c, utils.c, xmd5.c`, example:
-        register DWORD n1, n2;
-    should be like that:
-        DWORD n1, n2;
-    Go to `game/matrix_card.cpp` and remove all `register` too.
+- Go to `libthecore/src` and remove all `register` from `gost.c, tea.c, utils.c, xmd5.c`, example:  
+```cpp
+register DWORD n1, n2;
+```  
+should be like that:  
+```cpp
+DWORD n1, n2;
+```  
+Go to `game/matrix_card.cpp` and remove all `register` too.
 
-- Remove `game/minilzo.h` and `game/minilzo.c`
-    Go to game `lzo_manager.h, main.cpp, MarkImage.h, test.cpp, test_window.cpp` and replace this:
-        #include "minilzo.h"
-    to this:
-        #include <minilzo/minilzo.h>
-    Then, compile new version lzo or minilzo lib.
-    I will use this:
-        https://github.com/CCHyper/minilzo
-    Put your compiled files to new directory in extern, example:
-        extern/include/minilzo/lzoconf.h
-        extern/include/minilzo/lzodefs.h
-        extern/include/minilzo/minilzo.h
-        extern/lib/libminilzo.a
+- Remove `game/minilzo.h` and `game/minilzo.c`.  
+Go to game `lzo_manager.h, main.cpp, MarkImage.h, test.cpp, test_window.cpp` and replace this:  
+```cpp
+#include "minilzo.h"
+```  
+to this:  
+```cpp
+#include <minilzo/minilzo.h>
+```  
+Then, compile (or take mine) new version lzo or minilzo lib. Put your compiled files to new directory in extern, example:  
+extern/include/minilzo/lzoconf.h  
+extern/include/minilzo/lzodefs.h  
+extern/include/minilzo/minilzo.h  
+extern/lib/libminilzo.a
 
 - Go to `game/input_db.cpp` replace this:
         CHARACTER_MANAGER::instance().for_each_pc(std::mem_fun(&CHARACTER::ComputePoints));
