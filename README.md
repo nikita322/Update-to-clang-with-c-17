@@ -222,8 +222,7 @@ DWORD n1, n2;
 ```  
 Go to `game/matrix_card.cpp` and remove all `register` too.
 
-- Remove `game/minilzo.h` and `game/minilzo.c`.   
-Go to game `lzo_manager.h, main.cpp, MarkImage.h, test.cpp, test_window.cpp` and replace this:  
+- Remove `game/minilzo.h` and `game/minilzo.c`. Go to game `lzo_manager.h, main.cpp, MarkImage.h, test.cpp, test_window.cpp` and replace this:  
 ```cpp
 #include "minilzo.h"
 ```  
@@ -239,10 +238,14 @@ extern/include/minilzo/minilzo.h
 extern/lib/libminilzo.a
 ```
 
-- Go to `game/input_db.cpp` replace this:
-        CHARACTER_MANAGER::instance().for_each_pc(std::mem_fun(&CHARACTER::ComputePoints));
-    to this:
-        CHARACTER_MANAGER::instance().for_each_pc(std::mem_fn(&CHARACTER::ComputePoints));
+- Go to `game/input_db.cpp` replace this:  
+```cpp
+CHARACTER_MANAGER::instance().for_each_pc(std::mem_fun(&CHARACTER::ComputePoints));
+```  
+to this:  
+```cpp
+CHARACTER_MANAGER::instance().for_each_pc(std::mem_fn(&CHARACTER::ComputePoints));
+```
     
 - Go to `game/messenger_manager.cpp` replace this:
         DBManager::instance().FuncQuery(std::bind1st(std::mem_fun(&MessengerManager::LoadList), this),
