@@ -15,7 +15,7 @@ and:
 on this:  
     `decoder_->ProcessData((CryptoPP::byte*)buffer, (const CryptoPP::byte*)buffer, length);`
 
-5. Go to common/stl.h remove that:
+5. Go to common/stl.h remove that:  
         ```
         template <typename T> T MIN(T a, T b)
         {
@@ -33,7 +33,7 @@ on this:
             tv = (min > value ? min : value);
             return (max < tv) ? max : tv;
         }
-        ```    
+        ```  
     And this:  
         ```
         #ifdef __GNUC__
