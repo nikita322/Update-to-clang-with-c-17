@@ -101,17 +101,25 @@ to this:
 int iSize = std::min(w * h, pkGrid->m_iWidth * pkGrid->m_iHeight);
 ```
 
-- Go to `game/stdafx.h` add this:
-        #include <random>
-    after this:
-        #include <algorithm>
-        #include <float.h>
-    Go to `game/char_battle.cpp` replace this (twice):
-        random_shuffle(vec_bSlots.begin(), vec_bSlots.end());
-    to this:
-        std::random_device rd;
-        std::mt19937 g(rd());
-        std::shuffle(vec_bSlots.begin(), vec_bSlots.end(), g);
+- Go to `game/stdafx.h` add this:  
+```cpp
+#include <random>
+```  
+after this:  
+```cpp
+#include <algorithm>
+#include <float.h>
+```  
+Go to `game/char_battle.cpp` replace this (twice):  
+```cpp
+random_shuffle(vec_bSlots.begin(), vec_bSlots.end());
+```  
+to this:  
+```cpp
+std::random_device rd;
+std::mt19937 g(rd());
+std::shuffle(vec_bSlots.begin(), vec_bSlots.end(), g);
+```
 
 - Go to `game/char.h` repalce this:
         boost::unordered_map<VID, size_t> TargetVIDMap;
