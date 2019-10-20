@@ -16,24 +16,24 @@ on this:
     `decoder_->ProcessData((CryptoPP::byte*)buffer, (const CryptoPP::byte*)buffer, length);`
 
 5. Go to common/stl.h remove that:  
-        ```cpp
-        template <typename T> T MIN(T a, T b)
-        {
-            return a < b ? a : b;
-        }
+```cpp
+template <typename T> T MIN(T a, T b)
+{
+    return a < b ? a : b;
+}
 
-        template <typename T> T MAX(T a, T b)
-        {
-            return a > b ? a : b;
-        }
-        template <typename T> T MINMAX(T min, T value, T max)
-        {
-            T tv;
+template <typename T> T MAX(T a, T b)
+{
+    return a > b ? a : b;
+}
+template <typename T> T MINMAX(T min, T value, T max)
+{
+    T tv;
 
-            tv = (min > value ? min : value);
-            return (max < tv) ? max : tv;
-        }
-        ```  
+    tv = (min > value ? min : value);
+    return (max < tv) ? max : tv;
+}
+```  
     And this:  
         ```
         #ifdef __GNUC__
