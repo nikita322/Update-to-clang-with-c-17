@@ -76,18 +76,30 @@ auto clip = [](float floor, float x, float ceiling)
 fCharge = clip(0.f, fCharge, 100.f);
 ```
 
-- Go to `libgame/src/grid.cc` add this:
-        #include <algorithm>
-    after this:
-        #include <stdio.h>
-    and replace that:
-        int iSize = std::MIN(w * h, pkGrid->m_iWidth * pkGrid->m_iHeight);
-    to this:
-        int iSize = std::min(w * h, pkGrid->m_iWidth * pkGrid->m_iHeight);
-    Go to db/grid.cpp replace this:
-        int iSize = std::MIN(w * h, pkGrid->m_iWidth * pkGrid->m_iHeight);
-    to this:
-        int iSize = std::min(w * h, pkGrid->m_iWidth * pkGrid->m_iHeight);
+- Go to `libgame/src/grid.cc` add this:  
+```cpp
+#include <algorithm>
+```  
+after this:  
+```cpp
+#include <stdio.h>
+```  
+and replace that:  
+```cpp
+int iSize = std::MIN(w * h, pkGrid->m_iWidth * pkGrid->m_iHeight);
+```  
+to this:  
+```cpp
+int iSize = std::min(w * h, pkGrid->m_iWidth * pkGrid->m_iHeight);
+```  
+Go to db/grid.cpp replace this:  
+```cpp
+int iSize = std::MIN(w * h, pkGrid->m_iWidth * pkGrid->m_iHeight);
+```  
+to this:  
+```cpp
+int iSize = std::min(w * h, pkGrid->m_iWidth * pkGrid->m_iHeight);
+```
 
 - Go to `game/stdafx.h` add this:
         #include <random>
