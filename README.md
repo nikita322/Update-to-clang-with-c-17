@@ -16,6 +16,7 @@ on this:
     `decoder_->ProcessData((CryptoPP::byte*)buffer, (const CryptoPP::byte*)buffer, length);`
 
 5. Go to common/stl.h remove that:
+        ```
         template <typename T> T MIN(T a, T b)
         {
             return a < b ? a : b;
@@ -32,18 +33,25 @@ on this:
             tv = (min > value ? min : value);
             return (max < tv) ? max : tv;
         }
-    And this:
+        ```    
+    And this:  
+        ```
         #ifdef __GNUC__
         #include <ext/functional>
         #endif
-    Repalce this:
+        ```  
+    Repalce this:  
+        ```
         #ifndef itertype
         #define itertype(v) typeof((v).begin())
         #endif
-    To this:
+        ```  
+    To this:  
+        ```
         #ifndef itertype
         #define itertype(v) __typeof((v).begin())
         #endif
+        ```
 
 - Go to game/DragonSoul.cpp replace this:
         float fCharge = vec_chargings[idx] * (100 + iBonus) / 100.f;
