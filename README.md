@@ -161,44 +161,56 @@ and this:
 #endif
 ```
 
-- Go to `db/ClientManager.h` and `game/p2p.h` and replace this:
-        #include <boost/unordered_map.hpp>
-        #include <boost/unordered_set.hpp>
-    to this:
-        #include <unordered_map>
-        #include <unordered_set>
-    then, replace "boost::" to "std::". Example:
-        typedef std::unordered_map<short, BYTE> TChannelStatusMap;
-    Go to game/stdafx.h remove this:
-        #ifdef __GNUC__
-        #include <float.h>
-        #include <tr1/unordered_map>
-        #include <tr1/unordered_set>
-        #define TR1_NS std::tr1
-        #else
-        #include <boost/unordered_map.hpp>
-        #include <boost/unordered_set.hpp>
-        #define TR1_NS boost
-        #define isdigit iswdigit
-        #define isspace iswspace
-        #endif
-    Go to `game/fifo_allocator.h` and remove this:
-        #ifdef __GNUC__
-        #include <tr1/unordered_map>
-        #define TR1_NS std::tr1
-        #else
-        #include <boost/unordered_map.hpp>
-        #define TR1_NS boost
-        #endif
-    Go to `game/debug_allocator_adapter.h` and remove this:
-        #ifdef __GNUC__
-        #include <tr1/unordered_map>
-        #define TR1_NS std::tr1
-        #else
-        #include <boost/unordered_map.hpp>
-        #define TR1_NS boost
-        #endif
-    Replace all `TR1_NS::` to `std::` in game and db
+- Go to `db/ClientManager.h` and `game/p2p.h` and replace this:  
+```cpp
+#include <boost/unordered_map.hpp>
+#include <boost/unordered_set.hpp>
+```  
+to this:  
+```cpp
+#include <unordered_map>
+#include <unordered_set>
+```  
+then, replace `boost::` to `std::`. Example:  
+```cpp
+typedef std::unordered_map<short, BYTE> TChannelStatusMap;
+```  
+Go to `game/stdafx.h` remove this:  
+```cpp
+#ifdef __GNUC__
+#include <float.h>
+#include <tr1/unordered_map>
+#include <tr1/unordered_set>
+#define TR1_NS std::tr1
+#else
+#include <boost/unordered_map.hpp>
+#include <boost/unordered_set.hpp>
+#define TR1_NS boost
+#define isdigit iswdigit
+#define isspace iswspace
+#endif
+```  
+Go to `game/fifo_allocator.h` and remove this:  
+```cpp
+#ifdef __GNUC__
+#include <tr1/unordered_map>
+#define TR1_NS std::tr1
+#else
+#include <boost/unordered_map.hpp>
+#define TR1_NS boost
+#endif
+```  
+Go to `game/debug_allocator_adapter.h` and remove this:  
+```cpp
+#ifdef __GNUC__
+#include <tr1/unordered_map>
+#define TR1_NS std::tr1
+#else
+#include <boost/unordered_map.hpp>
+#define TR1_NS boost
+#endif
+```  
+Replace all `TR1_NS::` to `std::` in game and db
 
 - Go to `libthecore/src` and remove all `register` from `gost.c, tea.c, utils.c, xmd5.c`, example:
         register DWORD n1, n2;
