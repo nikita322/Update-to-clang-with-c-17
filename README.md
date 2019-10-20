@@ -420,7 +420,7 @@ to this:
 for_each(i.begin(), i.end(), std::bind(&CHARACTER::UpdateStateMachine, std::placeholders::_1, iPulse));
 ```
 
-- Go to `game/config.cpp` replace this (three times):
+- Go to `game/config.cpp` replace this (three times):  
 ```cpp
 if (NULL != line[0])
 ```  
@@ -450,37 +450,65 @@ m_SkillUseInfo[dwVnum].UseSkill(
     lMaxHit))
 ```
 
-- Go to `game/cmd_gm.cpp` replace this:
-        if (*szName == NULL || *szChangeAmount == '\0')
-    to this:
-        if (*szName == '\0' or * szChangeAmount == '\0')
+- Go to `game/cmd_gm.cpp` replace this:  
+```cpp
+if (*szName == NULL || *szChangeAmount == '\0')
+```  
+to this:  
+```cpp
+if (*szName == '\0' or * szChangeAmount == '\0')
+```
 
-- Go to `game/char_item.cpp` replace this (five times):
-        std::vector <LPITEM> item_gets(NULL);
-    to this:
-        std::vector <LPITEM> item_gets(0);
+- Go to `game/char_item.cpp` replace this (five times):  
+```cpp
+std::vector <LPITEM> item_gets(NULL);
+```  
+to this:  
+```cpp
+std::vector <LPITEM> item_gets(0);
+```
 
-- Go to `game/utils.cpp` replace this:
-        if (NULL == w[1])
-    to this:
-        if (!w[1])
-    then replace:
-        if (NULL == *s)
-    to this:
-        if (!*s)
-    then replace:
-        if (NULL == *w)
-    to this:
-        if (!*w)
+- Go to `game/utils.cpp` replace this:  
+```cpp
+if (NULL == w[1])
+```  
+to this:  
+```cpp
+if (!w[1])
+```  
+then replace:  
+```cpp
+if (NULL == *s)
+```  
+to this:  
+```cpp
+if (!*s)
+```  
+then replace:  
+```cpp
+if (NULL == *w)
+```  
+to this:  
+```cpp
+if (!*w)
+```
 
-- Go to `game/questlua_pc.cpp` replace this:
-        std::vector <LPITEM> item_gets(NULL);
-    to this:
-        std::vector <LPITEM> item_gets(0);
+- Go to `game/questlua_pc.cpp` replace this:  
+```cpp
+std::vector <LPITEM> item_gets(NULL);
+```  
+to this:  
+```cpp
+std::vector <LPITEM> item_gets(0);
+```
 
-- Go to `game/sectree_manager.cpp` replace this:
-        unsigned int uiSize;
-        unsigned int uiDestSize;
-    to this:
-        long unsigned int uiSize;
-        long unsigned int uiDestSize;
+- Go to `game/sectree_manager.cpp` replace this:  
+```cpp
+unsigned int uiSize;
+unsigned int uiDestSize;
+```
+to this:  
+```cpp
+long unsigned int uiSize;
+long unsigned int uiDestSize;
+```
