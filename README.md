@@ -7,15 +7,15 @@ Update to clang with c++17
 3. Add new flag for all Makefile "-std=c++17"
 
 4. Go to game/cipher.h replace this:  
-    `encoder_->ProcessData((byte*)buffer, (const byte*)buffer, length);`
+    `encoder_->ProcessData((byte*)buffer, (const byte*)buffer, length);`  
 on this:  
-    `encoder_->ProcessData((CryptoPP::byte*)buffer, (const CryptoPP::byte*)buffer, length);`
+    `encoder_->ProcessData((CryptoPP::byte*)buffer, (const CryptoPP::byte*)buffer, length);`  
 and:  
-    `decoder_->ProcessData((byte*)buffer, (const byte*)buffer, length);`
+    `decoder_->ProcessData((byte*)buffer, (const byte*)buffer, length);`  
 on this:  
     `decoder_->ProcessData((CryptoPP::byte*)buffer, (const CryptoPP::byte*)buffer, length);`
 
-- Go to common/stl.h remove that:
+5. Go to common/stl.h remove that:
         template <typename T> T MIN(T a, T b)
         {
             return a < b ? a : b;
