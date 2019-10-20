@@ -16,7 +16,7 @@ on this:
     `decoder_->ProcessData((CryptoPP::byte*)buffer, (const CryptoPP::byte*)buffer, length);`
 
 5. Go to common/stl.h remove that:  
-        ```
+        ```cpp
         template <typename T> T MIN(T a, T b)
         {
             return a < b ? a : b;
