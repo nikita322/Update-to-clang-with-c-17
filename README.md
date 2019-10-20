@@ -8,7 +8,9 @@ Later you can find an example of my work on my github account:
 - Add new flag for all Makefile "-std=c++17"
 
 - Go to game/cipher.h replace this:
+```c++
         encoder_->ProcessData((byte*)buffer, (const byte*)buffer, length);
+```
     on this:
         encoder_->ProcessData((CryptoPP::byte*)buffer, (const CryptoPP::byte*)buffer, length);
     and:
